@@ -47,7 +47,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="springboot-02-config" options="-parameters" />
+      <module name="springboot-02-config" options="-parameters --add-modules java.base" />
       <module name="springboot-03-web" options="-parameters --add-modules java.base,java.net.http" />
       <module name="springboot-04-security" options="-parameters" />
       <module name="springbootStudy" options="-parameters --add-modules java.base" />

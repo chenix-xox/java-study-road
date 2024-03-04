@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "name": "student",
+      "type": "com.xxx.springboot02config.pojo.Student",
+      "sourceType": "com.xxx.springboot02config.pojo.Student"
+    }
+  ],
+  "properties": [
+    {
+      "name": "student.age",
+      "type": "java.lang.Integer",
+      "sourceType": "com.xxx.springboot02config.pojo.Student"
+    },
+    {
+      "name": "student.birth",
+      "type": "java.util.Date",
+      "sourceType": "com.xxx.springboot02config.pojo.Student"
+    },
+    {
+      "name": "student.happy",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.xxx.springboot02config.pojo.Student"
+    },
+    {
+      "name": "student.last-name",
+      "type": "java.lang.String",
+      "sourceType": "com.xxx.springboot02config.pojo.Student"
+    },
+    {
+      "name": "student.lists",
+      "type": "java.util.List<java.lang.Object>",
+      "sourceType": "com.xxx.springboot02config.pojo.Student"
+    },
+    {
+      "name": "student.maps",
+      "type": "java.util.Map<java.lang.String,java.lang.Object>",
+      "sourceType": "com.xxx.springboot02config.pojo.Student"
+    },
+    {
+      "name": "student.teacher",
+      "type": "com.xxx.springboot02config.pojo.Teacher",
+      "sourceType": "com.xxx.springboot02config.pojo.Student"
+    }
+  ],
+  "hints": []
+}
