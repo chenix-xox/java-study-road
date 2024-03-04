@@ -1,0 +1,1294 @@
+ssm..项目打包为war在tomcat运行
+
+springboot内嵌tomcat，直接运行，微服务架构！
+
+新服务架构：服务网格！
+
+购买商品流程：
+
+仓库冻结、资金冻结、验证；购买成功，仓库数量减少，仓库解冻，资金解冻
+
+
+
+# 第一个SpringBoot程序
+
+## 新建项目的方法
+
+- Spring官方网站新建（[Spring Initializr](https://start.spring.io/)）
+- 使用集成了SpringBoot的IDEA新建
+
+
+
+## 热部署
+
+```xml
+<!--devtools热部署-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <optional>true</optional>
+    <scope>true</scope>
+</dependency>
+```
+
+> - 修改类–>保存：应用会重启
+> - 修改配置文件–>保存：应用会重启
+> - 修改页面–>保存：应用不会重启，但会重新加载，页面会刷新
+
+```yaml
+spring:
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+      exclude: WEB-INF/**
+  freemarker:
+    cache: false    #页面不加载缓存，修改即时生效
+```
+
+ 
+
+
+
+## 自定义LOGO菜单
+
+> -resources
+>
+> ​	-banner.txt
+
+banner.txt写入ascii字符，可被读取为启动程序显示的样式
+
+
+
+# 原理初窥
+
+## 自动装配
+
+### pom.xml
+
+- spring-boot-dependencies：核心依赖在父工程中！
+- 引入springboot依赖不需要指定版本，就是有版本仓库
+
+
+
+### 启动器
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter</artifactId>
+</dependency>
+```
+
+- 启动器：说白了就是Springboot的启动场景；
+- 比如spring-boot-starter-web,他就会帮我们自动导入web环境所有的依赖！
+- springboot会将所有的功能场景，都变成一个个的启动器
+- 我们要使用什么功能，就只需要找到对应的启动器就可以了`starter`
+
+,启动器：说白了就是Springboot的启动场景；
+比如spring-boot-starter-web,他就会帮我们自动导入web环境所有的依赖！
+·springboot会将所有的功能场景，都变成一个个的启动器
+我们要使用什么功能，就只需要找到对应的启动器就可以了
+starter
+
+
+
+配置文件（yaml）
+
+
+
+# 属性赋值
+
+## @Value注解
+
+```java
+public class Student {
+    @Value("名字1")
+    private String name;
+    private Integer age;
+    private Boolean happy;
+    private Date birth;
+    private Map<String,Object> maps;
+    private List<Object> lists;
+    private Teacher teacher;
+}
+```
+
+
+
+## 配置文件
+
+### 引入依赖
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-configuration-processor</artifactId>
+    <optional>true</optional>
+</dependency>
+```
+
+
+
+### application.yaml中写入值
+
+```yaml
+student:
+  name: 你好
+  age: 17
+  happy: false
+  birth: 2020/10/10
+  maps: { k1: v1,k2: v2 }
+  lists:
+    - code
+    - music
+    - girl
+  teacher:
+    name: 老师1号
+    teachAge: 20
+```
+
+
+
+### 配置注解 (1)
+
+`@ConfigurationProperties(prefix = "student")`
+
+**注意：**必须使用 `@Component`
+
+```java
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Component
+@ConfigurationProperties(prefix = "student")
+public class Student {
+    @Value("名字1")
+    private String name;
+    private Integer age;
+    private Boolean happy;
+    private Date birth;
+    private Map<String,Object> maps;
+    private List<Object> lists;
+    private Teacher teacher;
+}
+```
+
+```yaml
+student:
+  name: 你好
+  age: 17
+  happy: false
+  birth: 2020/10/10
+  maps: { k1: v1,k2: v2 }
+  lists:
+    - code
+    - music
+    - girl
+  teacher:
+    name: 老师1号
+    teachAge: 20
+```
+
+
+
+### 配置注解 (指定配置文件)
+
+`@PropertySource(value = "classpath:xxx.properties")`
+
+配合  `@Value`
+
+```java
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Component
+@PropertySource(value = "classpath:xxx.properties")
+public class Student {
+    @Value("${name}")
+    private String name;
+    private Integer age;
+    private Boolean happy;
+    private Date birth;
+    private Map<String, Object> maps;
+    private List<Object> lists;
+    private Teacher teacher;
+}
+```
+
+```properties
+name=你好
+age=17
+happy=false
+birth=2020/10/10
+maps={ k1= v1,k2= v2 }
+lists=[1,2,3]
+teacher.teachAge=20
+teacher.name=20
+```
+
+
+
+### yaml中配置动态值
+
+```yaml
+student:
+  name: 你好${random.uuid}
+  age: ${random.int}
+  happy: false
+  birth: 2020/10/10
+  maps: { k1: v1,k2: v2 }
+  hello: kkk
+  lists:
+    - code
+    - music
+    - girl
+  teacher:
+    name: ${student.hello:hello}_老师一号
+    teachAge: 20
+```
+
+
+
+### **松散绑定**：
+
+实体类中使用：`private String lastName;`
+
+yaml配置文件中属性赋值可写：`last-name: 你好`
+
+## JSR303校验
+
+类上使用注解：**@Validated**
+
+类似正则表达式
+
+> @NotNull(message="名字不能为空")
+> private String userName;
+>
+> @Max(Value=120,message="年龄最大不能查过120")
+> private int age;
+>
+> @Email(message="邮箱格式错误")
+> private String email;
+>
+> 
+>
+> **空检查**
+> @Null
+> 验证对象是否为null
+>
+> @NotNull
+> 验证对象是否不为null,无法查检长度为8的字符串
+>
+> @NotBlank
+> 检查约束字符串是不是Null还有被Trim的长度是否大于9，只对字符串，且会去掉前后空格
+>
+> @NotEmpty
+> 检查约束元素是否为NULL或者是EMPTY.
+>
+> 
+>
+> **Boolean检查**
+>
+> @AssertTrue
+> 验证Boolean对象是否为true
+>
+> @AssertFalse
+> 验证Boolean对象是否为fa1se
+>
+> 
+>
+> **长度检查**
+> @size(min=,max=) 验证对象 (Array,Collection,Map,String) 长度是否在给定的范围之内
+>
+> @Length(min=,max=) Validates that the annotated string is between min and max included.
+>
+> 
+>
+> **日期检查**
+> @Past
+> 验证Date和Calendar对象是否在当前时间之前
+>
+> @Future
+> 验证Date和Calendar对象是否在当前时间之后
+>
+> @Pattern
+> 验证String对象是否符合正则表达式的规则 : 正则表达式
+>
+> 
+>
+> ..........等等
+> 除此以外，我们还可以自定义一些数据校验规则
+
+
+
+## 配置文件
+
+### 优先级
+
+被读取的如：application.yaml等配置文件的优先级
+
+> - **`file:./config/`**
+> - **`file:./`**
+> - **`classpath:/config/`**
+> - **`classpath:/`**
+
+
+
+## Springboot多环境配置
+
+可以选择激活哪一个配置文件
+
+### properties
+
+例如已有文件
+
+> - **application.properties**
+> - application-dev.properties
+> - application-test.properties
+
+在**application.properties**文件中使用参数选择激活
+
+`spring.profiles.active=dev`，代表激活application-dev.properties配置文件的属性
+
+
+
+### yaml
+
+仅需一个文件：**application.yaml**
+
+用 **---** 分隔，**profiles**标注，**active**表明启用
+
+```yaml
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+
+---
+server:
+  port: 8081
+spring:
+  profiles: dev
+
+---
+server:
+  port: 8082
+spring:
+  profiles: test
+```
+
+
+
+## 自动装配原理精髓
+
+1. SpringBoot启动会加载大量的自动配置类；
+2. 我们看我们需要的功能有没有在SpringBoot默认写好的自动配置类当中；
+3. 我们再来看这个自动配置类中到底配置了哪些组件；(只要我们要用的组件存在在其中，我们就不需要再手动配置了)；
+4. 给容器中自动配置类添加组件的时候，会从**properties类**中获取某些属性。我们只需要在配置文件中指定这些属性的值即可；
+
+- **xxxxAutoConfiguration：**自动配置类；给容器中添加组件；
+- **xxxxProperties：**封装配置文件中相关属性；
+
+
+
+**PS：**可以通过**`debug=true`**来查看哪些自动配置类生效了，哪些没有
+
+
+
+# SpringBoot Web开发
+
+## webjars
+
+```xml
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>jquery</artifactId>
+    <version>3.6.4</version>
+</dependency>
+```
+
+
+
+## 静态资源
+
+**能直接访问静态资源的所有路径：**
+
+classpath:即**src/main/resources**
+
+> classpath:
+>
+> ​	/META-INF/resources/
+>
+> ​	/resources/
+>
+> ​	/static/
+>
+> ​	/public/
+
+**优先级：**resources > static（默认） > public
+
+
+
+### 模板引擎
+
+- **templates目录**下的页面只能通过**controller**来跳转
+- 默认的视图解析器只能跳转.jsp页面
+- 因此需要引入thymeleaf依赖
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+```
+
+
+
+### Thymeleaf
+
+**所有的html元素属性，都可以被thymeleaf替换接管**
+
+- 在html中使用需要导入约束
+
+  ```html
+  <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  ```
+
+- 防止${xxx}报错，可以使用如下注释
+
+  ```html
+  <!--suppress ThymeleafVariablesResolveInspection -->
+  ```
+
+
+
+#### 语法
+
+##### th:text  /  th:utext
+
+```java
+// controller部分
+@GetMapping("/index")
+public String index(Model model) {
+    model.addAttribute("msg", "<h1>HelloThymeleaf</h1>");
+    return "index";
+}
+```
+
+```html
+// html
+<div th:text="${msg}">你好</div>
+<div th:utext="${msg}">你好</div>
+```
+
+- 使用了text的将直接输出msg的文本内容完完全全
+- 使用utext的会将msg内容中的html标签识别，并输出其余的文本内容
+
+
+
+#### th:each
+
+```java
+// controller部分
+...
+model.addAttribute("users", Arrays.asList("ab", "cd"));
+...
+```
+
+```html
+// html部分
+<div th:each="user:${users}" th:text="${user}"></div>
+```
+
+
+
+## MVC Config
+
+扩展springmvc，所以要实现 **WebMvcConfigurer**，对一些要扩展修改的方法进行Override重写操作
+
+```java
+@Configuration
+public class MyMvcConfig implements WebMvcConfigurer {
+    ...
+}
+```
+
+
+
+### ViewResolver
+
+ViewResolver实现了视图解析器接口的类，因此可将其看作视图解析器
+
+扩展该视图解析器功能，自定义该组件，并使用@Bean注解交给SpringBoot，会自动装配
+
+```java
+@Configuration
+public class MyMvcConfig implements WebMvcConfigurer {
+    @Bean
+    public ViewResolver myViewResolver(){
+        return new MyViewResolver();
+    }
+
+    public static class MyViewResolver implements ViewResolver {
+        @Override
+        public View resolveViewName(String viewName, Locale locale) throws Exception {
+            return null;
+        }
+    }
+}
+```
+
+
+
+### addViewControllers
+
+```java
+@Override
+public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/xxx").setViewName("index");
+}
+```
+
+访问/xxx，跳转至index
+
+
+
+## 管理系统开发
+
+### 准备工作
+
+准备好前端资源
+
+1. html页面放到 
+
+   > -resources 
+   >
+   > ​	-templates
+
+2. css、img、js资源放到
+
+   > -resources
+   >
+   > ​	-static
+
+
+
+#### 模拟数据
+
+**注意：**dao层给spring托管使用**@Repository**注解
+
+```java
+public class DepartmentDao {
+    private static Map<Integer, Department> departments = null;
+
+    static {
+        departments = new LinkedHashMap<>();
+        departments.put(101, new Department(101, "101部"));
+        departments.put(102, new Department(102, "102部"));
+        departments.put(103, new Department(103, "103部"));
+        departments.put(104, new Department(104, "104部"));
+        departments.put(105, new Department(105, "105部"));
+        departments.put(106, new Department(106, "106部"));
+    }
+
+    /**
+     * 获取所有数据
+     */
+    public Collection<Department> getDepartments() {
+        return departments.values();
+    }
+
+    /**
+     * 根据id获取部门信息
+     */
+    public Department getDepartment(Integer id) {
+        return departments.get(id);
+    }
+
+    /**
+     * 根据id删除部门信息
+     */
+    public void deleteDepartment(Integer id) {
+        departments.remove(id);
+    }
+
+    /**
+     * 新增部门信息
+     */
+    public void addDepartment(Department department) {
+        departments.put(department.getId(), department);
+    }
+
+    /**
+     * 修改部门信息
+     */
+    public void updateDepartment(Department department) {
+        departments.put(department.getId(), department);
+    }
+}
+```
+
+
+
+### 首页实现
+
+为了访问
+
+> - localhost:8080
+> - localhost:8080/index
+> - localhost:8080/index.html
+
+都能跳转到index页面，可以扩展配置MvcConfig👇
+
+```java
+@Configuration
+public class MyMvcConfig implements WebMvcConfigurer {
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/index.html").setViewName("index");
+        registry.addViewController("/index").setViewName("index");
+    }
+}
+```
+
+
+
+**所有的静态资源被Thymeleaf接管，引用静态资源文件（css..）👇**
+
+> -resources
+>
+> ​	-static
+>
+> ​		-css
+>
+> ​		-js
+>
+> ​		-img
+
+使用@{}可以忽略static
+
+```html
+<link th:href="@{/css/index.css}" rel="stylesheet">
+```
+
+
+
+**关闭模板引擎缓存👇**
+
+```properties
+spring.thymeleaf.cache=false
+```
+
+
+
+**拼接路径：**
+
+```properties
+server.servlet.context-path=/xxx
+```
+
+例如：原本访问localhost:8080/index.html即可
+
+配置路径后，访问的是localhost:8080/xxx/index.html
+
+
+
+### 国际化
+
+点击切换中英文之类的玩意..
+
+1. 首先确保项目的所有字符编码为**utf-8**（fileEncodings)
+
+2. resources下新建目录：**i18n**(internationalization （国际化）简称：i18n)
+
+3. i18n目录下新增配置文件：**login.properties** / **login_zn_CN.properties**
+
+   会被合并为一个**Resource Bundle'login'**
+
+   需要新增别的语言可以直接在Resource Bundle上右键新增配置文件，右侧”+“，输入**en_US**新增英语..
+
+4. 下载可视化编辑插件 **Resource Bundle Editor**
+
+5. 进入login.properties，IDEA下方选择Resource Bundle，在login上点击”+“添加参数
+
+   右侧就会出现所有login_xxx的相关properties输入框配置不同的参数值
+
+
+
+**将以上配置使用起来**
+
+1. 确认转换位置
+
+   有一个类：MessageSourceAutoConfiguration，做自动化国际转换
+
+   在**application.properties**中配置识别
+
+   ```properties
+   spring.messages.basename=i18n.login
+   ```
+
+2. 在Thymeleaf中，需要用到国际化转换文字的地方使用
+
+   th:text="#{login.tip}"
+
+   ```html
+   <h1>[[#{login.tip}]]</h1>
+   <input type="submit" th:value="#{login.btn}"/>
+   ```
+
+3. 语言切换按钮及跳转**请求参数（l）**
+
+   ```html
+   <a th:href="@{/index.html(l='zh_CN')}">中文</a>
+   <a th:href="@{/index.html(l='en_US')}">English</a>
+   ```
+
+4. 编辑实现**区域解析器（LocaleResolver）**组件
+
+   ```java
+   public class MyLocaleResolver implements LocaleResolver {
+       @Override
+       public Locale resolveLocale(HttpServletRequest request) {
+           String language = request.getParameter("l");// 获取请求语言参数
+           Locale locale = Locale.getDefault();// 获取默认的
+           // 请求连接是否携带国际化参数
+           if (!StringUtils.isEmpty(language)){
+               String[] split = language.split("_");
+               return new Locale(split[0],split[1]);
+           }
+           return locale;
+       }
+   
+       @Override
+       public void setLocale(HttpServletRequest request, 
+                             HttpServletResponse response, 
+                             Locale locale) {
+   
+       }
+   }
+   ```
+
+5. 在**MvcConfig**中注入该自定义组件
+
+   ```java
+   @Configuration
+   public class MyMvcConfig implements WebMvcConfigurer {
+       @Bean
+       public LocaleResolver localeResolver(){
+           return new MyLocaleResolver();
+       }
+   }
+   ```
+
+
+
+### 解决问题
+
+登录后进入的页面，地址栏显示的是 /user/login?username=xxx
+
+模拟真实开发，在controller内跳转页面要重定向，并在mvc配置中配置重定向地址打开哪个页面
+
+例如：重定向到main.html，打开的页面是homePage
+
+```java
+@RequestMapping("/login")
+public String login(@RequestParam("username") String username,
+                    @RequestParam("pwd") String pwd,
+                    Model model) {
+    if (Objects.equals(username, "a") && Objects.equals(pwd, "a")){
+        // 登陆成功
+        return "redirect:/main.html";
+    }else {
+        model.addAttribute("msg","用户名或密码错误！");
+        return "index";
+    }
+}
+```
+
+```java
+@Configuration
+public class MyMvcConfig implements WebMvcConfigurer {
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/main.html").setViewName("homePage");
+    }
+}
+```
+
+
+
+### 拦截器
+
+1. 编写一个LoginHandlerInterceptor类
+
+   实现HandlerInterceptor类
+
+   重写preHandle方法
+
+   ```java
+   public class LoginHandlerInterceptor implements HandlerInterceptor {
+       @Override
+       public boolean preHandle(HttpServletRequest request, 
+                                HttpServletResponse response, 
+                                Object handler) throws Exception {
+           Object loginUser = request.getSession().getAttribute("loginUser");
+           if (loginUser == null) {
+               // 未登录
+               request.setAttribute("msg", "没有权限，请先登录");
+               request.getRequestDispatcher("/index.html").forward(request, response);
+               return false;
+           }
+           return true;
+       }
+   }
+   ```
+
+2. 在MvcConfig中注入该拦截器
+
+   并添加需要拦截的页面，不需要被拦截的页面..
+
+   ```java
+   @Configuration
+   public class MyMvcConfig implements WebMvcConfigurer {
+       @Override
+       public void addInterceptors(InterceptorRegistry registry) {
+           registry.addInterceptor(new LoginHandlerInterceptor())
+                   .addPathPatterns("/**")
+                   .excludePathPatterns("/index.html","/","/user/login","/css/**","/js/**","/img/**");
+       }
+   }
+   ```
+
+3. 使用Thymeleaf中的方法取session值放入页面
+
+   ```html
+   <h1>登陆成功！欢迎[[${session.loginUser}]]进入首页！</h1>
+   ```
+
+
+
+### Thymeleaf抽取前端复用性组件
+
+**注意：**复用性高的一些部分建议放到公共页面（common.html），进行抽取调用
+
+- 被抽取的部分，使用`th:fragment="名"`
+
+  ```html
+  <div class="side_bar" th:fragment="side_bar"></div>
+  ```
+
+- 使用抽取到的部分：`th:insert="~{页面::名}"`，也可以用`th:replace`，与`th:insert`使用方法相同
+
+  ```html
+  <div th:insert="~{homePage::side_bar}"></div>
+  ```
+
+- 名后面是可以**传参数**的，用以表示当前使用抽取部分的页面是哪个页面，方便公共部分显示不同的样式
+
+  **例如：**
+
+  > 使用抽取的页面：`th:replace="~{commons/commons::side_bar(active='list.html')}"`
+  >
+  > 被抽取的页面：`th:class="@active=='list.html'?'active b':'b'"`
+  >
+  > 通过使用抽取页面传来的参数，决定class的值不同
+
+  ```html
+  <div class="side_bar" th:fragment="side_bar">
+      <ul>
+          <li>
+              <a th:href="@{/index.html}" th:class="${active=='index.html' ? 'active ab' : 'ab'}">
+                  个人中心
+              </a>
+          </li>
+          <li th:class="${active=='list.html' ? 'active ab' : 'ab'}">
+              <a th:href="@{/emps}" th:class="${active=='list.html' ? 'active ab' : 'ab'}">
+                  员工管理
+              </a>
+          </li>
+      </ul>
+  </div>
+  ```
+
+  ```html
+  <div th:replace="~{commons/commons::side_bar(active = 'index.html')}"></div>
+  ```
+
+
+
+### 前端小修改
+
+格式化日期
+
+```html
+<td th:text="${#dates.format(emp.birth,'yyyy-MM-dd HH:mm:ss')}"></td>
+```
+
+
+
+
+
+### 404
+
+templates下新建error目录，error目录下新建404.html页面即可自动识别
+
+如果有拦截器，登陆后才会访问到404页面
+
+
+
+
+
+## Druid数据源
+
+### 添加依赖
+
+```xml
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>druid</artifactId>
+    <version>1.1.23</version>
+</dependency>
+<dependency>
+    <groupId>log4j</groupId>
+    <artifactId>log4j</artifactId>
+    <version>1.2.17</version>
+</dependency>
+```
+
+**注意：**因为Druid包含log4j，因此还需要引入log4j的依赖
+
+
+
+### Yaml文件中配置自定义的数据源
+
+```yaml
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/mybatis?useSSL=true&userUniceode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+```
+
+
+
+### Druid相关配置
+
+```yaml
+  #Spring Boot 默认是不注入这些属性值的，需要自己绑定
+    #druid 数据源专有配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+
+    #配置监控统计拦截的filters，stat:监控统计、log4j：日志记录、wall：防御sql注入
+    #如果允许时报错  java.lang.ClassNotFoundException: org.apache.log4j.Priority
+    #则导入 log4j 依赖即可，Maven 地址：https://mvnrepository.com/artifact/log4j/log4j
+    filters:
+      commons-log.connection-logger-name: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+```
+
+
+
+### 新建Config配置文件
+
+现在需要程序员自己为 DruidDataSource 绑定全局配置文件中的参数，再添加到容器中，而不再使用 Spring Boot 的自动生成了；我们需要 自己添加 DruidDataSource 组件到容器中，并绑定属性
+
+> -config
+>
+> ​	-DruidConfig.java
+
+```java
+@Configuration
+public class DruidConfig {
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource")
+    //绑定到application.xml文件中 生效
+    public DataSource druidDateSource(){
+        return new DruidDataSource();
+    }
+}
+```
+
+
+
+#### 后台监控
+
+
+
+
+
+
+
+# SpringSecurity
+
+## 安全框架
+
+- SpringSecurity：身份认证、授权
+- Shiro
+- **两者类似**
+
+
+
+## 简介
+
+SpringSecurity：
+
+- 针对Spring项目的安全框架，也是SpringBoot底层安全模块默认的技术选型
+- 可以实现Web安全控制，仅需要引入spring-boot-starter-security模块，进行少量配置
+
+
+
+## 重要的类
+
+- WebSecurityConfigurerAdapter：自定义Security策略
+- AuthenticationManagerBuilder：自定义认证策略
+- @EnableWebSecurity：开启WebSecurity模式
+
+> Spring Security的两个主要目标是**"认证"**和**"授权"**（访问控制）
+>
+> "认证"（Authentication）
+>
+> "授权”（Authorization）
+>
+> 这个概念是通用的，而不是只在Spring Security中存在。
+
+
+
+## 导包
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+
+
+
+## SecurityConfig
+
+> ***<u>WebSecurityConfigurerAdapter在SpringSecurity5.7中已弃用</u>***
+>
+> 下面的测试样例使用版本：
+>
+> **测试SpringSecurity5.7以下（WebSecurityConfigurerAdapter<u>*未弃用*</u>的版本）**
+>
+> - Java：8
+> - SpringBoot：2.2.2.RELEASE
+>
+> 
+>
+> **测试SpringSecurity5.7及以上（WebSecurityConfigurerAdapter<u>*已弃用*</u>的版本）**
+>
+> - Java：17
+> - SpringBoot：3.2.2
+
+### 配置HttpSecurity
+
+**5.4：以下是使用 `WebSecurityConfigurerAdapter` 的示例配置，该配置使用 `HTTP Basic` 保护所有站点**
+
+```java
+@Configuration
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests((authz) -> authz
+                .anyRequest().authenticated()
+            )
+            .httpBasic(withDefaults());
+    }
+}
+```
+
+
+
+**5.7之后：注册一个 `SecurityFilterChain` bean**
+
+```java
+@Configuration
+public class SecurityConfiguration {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests((authz) -> authz
+                .anyRequest().authenticated()
+            )
+            .httpBasic(withDefaults());
+        return http.build();
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 题外
+
+## Thymeleaf标注
+
+> Simple expressions:
+>
+> Variable Expressions: **`${...}`**
+>
+> Selection Variable Expressions: **`*{...}`**
+>
+> Message Expressions: **`#{...}`**
+>
+> Link URL Expressions: **`@{...}`**
+>
+> Fragment Expressions: **`~{...}`**
+
+
+
+
+
+## kuang推荐
+
+SemanticUI
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
