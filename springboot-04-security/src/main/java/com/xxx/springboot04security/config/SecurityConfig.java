@@ -5,6 +5,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author Chenix
@@ -22,17 +23,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/level2/**").hasRole("vip2")
                 .antMatchers("/level3/**").hasRole("vip3");
 
-
         // 没有权限，默认到登陆页面
         http.formLogin();
+
+        // 开启注销
+        http.logout().logoutSuccessUrl("/");
     }
 
     // 认证
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("admin1").password("admin1").roles("vip1", "vip3")
+                .passwordEncoder(new BCryptPasswordEncoder())
+                .withUser("admin1").password(new BCryptPasswordEncoder().encode("admin1")).roles("vip1", "vip3")
                 .and()
-                .withUser("admin2").password("admin2").roles("vip1", "vip2");
+                .withUser("admin2").password(new BCryptPasswordEncoder().encode("admin2")).roles("vip1", "vip2");
     }
 }
