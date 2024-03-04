@@ -12,7 +12,6 @@
         <module name="spring-02-proxy" />
         <module name="spring-06-ajax" />
         <module name="springboot-04-security" />
-        <module name="springbootStudy" />
         <module name="spring-03-aop" />
         <module name="cookie_session" />
         <module name="springboot-03-web" />
@@ -22,6 +21,7 @@
         <module name="spring-04-mvc" />
         <module name="download" />
         <module name="springboot-02-config" />
+        <module name="springboot-01-study-start" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11">
@@ -39,18 +39,18 @@
       <module name="spring-06-ajax" target="8" />
       <module name="spring-07-interceptor" target="8" />
       <module name="spring-study" target="17" />
+      <module name="springboot-01-study-start" target="17" />
       <module name="springboot-02-config" target="17" />
       <module name="springboot-03-web" target="17" />
       <module name="springboot-04-security" target="8" />
-      <module name="springbootStudy" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springboot-01-study-start" options="-parameters --add-modules java.base" />
       <module name="springboot-02-config" options="-parameters --add-modules java.base" />
       <module name="springboot-03-web" options="-parameters --add-modules java.base,java.net.http" />
       <module name="springboot-04-security" options="-parameters" />
-      <module name="springbootStudy" options="-parameters --add-modules java.base" />
     </option>
   </component>
 </project>

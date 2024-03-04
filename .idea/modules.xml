@@ -17,10 +17,10 @@
       <module fileurl="file://$PROJECT_DIR$/spring-study/spring-06-ajax/spring-06-ajax.iml" filepath="$PROJECT_DIR$/spring-study/spring-06-ajax/spring-06-ajax.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-study/spring-07-interceptor/spring-07-interceptor.iml" filepath="$PROJECT_DIR$/spring-study/spring-07-interceptor/spring-07-interceptor.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-study/spring-study.iml" filepath="$PROJECT_DIR$/spring-study/spring-study.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springbootStudy/springboot-01-study-start.iml" filepath="$PROJECT_DIR$/springbootStudy/springboot-01-study-start.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-02-config/springboot-02-config.iml" filepath="$PROJECT_DIR$/springboot-02-config/springboot-02-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-03-web/springboot-03-web.iml" filepath="$PROJECT_DIR$/springboot-03-web/springboot-03-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-04-security/springboot-04-security.iml" filepath="$PROJECT_DIR$/springboot-04-security/springboot-04-security.iml" />
-      <module fileurl="file://$PROJECT_DIR$/springbootStudy/springbootStudy.iml" filepath="$PROJECT_DIR$/springbootStudy/springbootStudy.iml" />
     </modules>
   </component>
 </project>
