@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <servlet>
+        <servlet-name>cookieDemo01</servlet-name>
+        <servlet-class>com.kuang.servlet.CookieDemo01</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>cookieDemo01</servlet-name>
+        <url-pattern>/getc1</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>cookieDemo02</servlet-name>
+        <servlet-class>com.kuang.servlet.CookieDemo02</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>cookieDemo02</servlet-name>
+        <url-pattern>/getc2</url-pattern>
+    </servlet-mapping>
+
+    <!--  设置Session默认的失效时间  -->
+    <session-config>
+        <!--    以分钟为单位，1分钟后，Session失效    -->
+        <session-timeout>1</session-timeout>
+    </session-config>
+</web-app>
+        

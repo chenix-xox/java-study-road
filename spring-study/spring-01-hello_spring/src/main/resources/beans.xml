@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:annotation-config />
+
+    <bean name="user" class="com.xxx.pojo.User" p:username="x" p:pwd="xx"/>
+    <bean name="user1" class="com.xxx.pojo.User" c:username="x" c:pwd="xx"/>
+
+
+    <!--    使用Spring来创建对象，在Spring这些被称为Bean
+       bean = 对象
+       class = new 的对象
+       property 相当于给对象设置的值
+    -->
+    <bean id="hello" class="com.xxx.pojo.Hello">
+        <property name="str" value="String"/>
+    </bean>
+
+
+    <!-- 创建实现类的-->
+
+    <!-- 相当于new XxxDaoAaImpl-->
+    <bean id="aImpl" class="com.xxx.dao.XxxDaoAaImpl"/>
+
+    <!-- 相当于new XxxDaoBbImpl-->
+    <bean id="bImpl" class="com.xxx.dao.XxxDaoBbImpl"/>
+
+    <!-- 相当于new XxxServiceImpl-->
+    <bean id="xxxServiceImpl" class="com.xxx.service.XxxServiceImpl">
+        <!--
+        ref：引用spring容器中创建好的对象
+        value：具体的值，基本数据，类型
+        -->
+        <property name="xxxDao" ref="bImpl"/>
+    </bean>
+</beans>

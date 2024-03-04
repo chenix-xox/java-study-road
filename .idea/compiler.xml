@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="request" />
+        <module name="spring-05-json" />
+        <module name="spring-07-interceptor" />
+        <module name="spring-02-proxy" />
+        <module name="spring-06-ajax" />
+        <module name="springboot-04-security" />
+        <module name="springbootStudy" />
+        <module name="spring-03-aop" />
+        <module name="cookie_session" />
+        <module name="springboot-03-web" />
+        <module name="spring-01-hello_spring" />
+        <module name="Servlet01" />
+        <module name="Servlet02" />
+        <module name="spring-04-mvc" />
+        <module name="download" />
+        <module name="springboot-02-config" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="11">
+      <module name="cookie_session" target="1.5" />
+      <module name="download" target="8" />
+      <module name="JavaWeb" target="8" />
+      <module name="request" target="8" />
+      <module name="Servlet01" target="8" />
+      <module name="Servlet02" target="8" />
+      <module name="spring-01-hello_spring" target="17" />
+      <module name="spring-02-proxy" target="17" />
+      <module name="spring-03-aop" target="17" />
+      <module name="spring-04-mvc" target="8" />
+      <module name="spring-05-json" target="8" />
+      <module name="spring-06-ajax" target="8" />
+      <module name="spring-07-interceptor" target="8" />
+      <module name="spring-study" target="17" />
+      <module name="springboot-02-config" target="17" />
+      <module name="springboot-03-web" target="17" />
+      <module name="springboot-04-security" target="8" />
+      <module name="springbootStudy" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springboot-02-config" options="-parameters" />
+      <module name="springboot-03-web" options="-parameters --add-modules java.base,java.net.http" />
+      <module name="springboot-04-security" options="-parameters" />
+      <module name="springbootStudy" options="-parameters --add-modules java.base" />
+    </option>
+  </component>
+</project>

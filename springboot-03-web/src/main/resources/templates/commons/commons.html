@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .side_bar {
+            width: 20%;
+            border: 1px solid black;
+        }
+        .active{
+            color: red;
+            text-decoration: none;
+            background-color: cyan;
+        }
+        .ab{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="side_bar" th:fragment="side_bar">
+    <ul>
+        <li>
+            <a th:href="@{/index.html}" th:class="${active=='index.html' ? 'active ab' : 'ab'}">个人中心</a>
+        </li>
+        <li th:class="${active=='list.html' ? 'active ab' : 'ab'}">
+            <a th:href="@{/emps}" th:class="${active=='list.html' ? 'active ab' : 'ab'}">员工管理</a>
+        </li>
+        <li>
+            <a href="">部门管理</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

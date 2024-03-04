@@ -1,0 +1,33 @@
+student:
+  last-name: 你好${random.uuid}
+  age: ${random.int}
+  happy: false
+  birth: 2020/10/10
+  maps: { k1: v1,k2: v2 }
+  hello: kkk
+  lists:
+    - code
+    - music
+    - girl
+  teacher:
+    name: ${student.hello:hello}_老师一号
+    teachAge: 20
+
+
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+
+---
+server:
+  port: 8081
+spring:
+  profiles: dev
+
+---
+server:
+  port: 8082
+spring:
+  profiles: test

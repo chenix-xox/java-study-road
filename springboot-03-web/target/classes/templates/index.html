@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--suppress ThymeleafVariablesResolveInspection -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet">
+</head>
+<body>
+<!--<h1>首页</h1>-->
+<!--<div th:text="${msg}">你好</div>-->
+<!--<div th:utext="${msg}">你好</div>-->
+
+<!--<div th:each="user:${users}" th:text="${user}"></div>-->
+
+<h1 class="title">登录</h1>
+<form th:action="@{/user/login}" method="get">
+    <h1>[[#{login.tip}]]</h1>
+    <label>
+        用户名：
+        <input type="text" name="username"/>
+    </label>
+    <label>
+        密码：
+        <input type="password" name="pwd"/>
+    </label>
+    <p style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}">1</p>
+    <input type="submit" th:value="#{login.btn}"/>
+    <a th:href="@{/index.html(l='zh_CN')}">中文</a>
+    <a th:href="@{/index.html(l='en_US')}">English</a>
+</form>
+
+
+</body>
+</html>

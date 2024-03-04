@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .content {
+            display: flex;
+        }
+
+
+        .main {
+            width: 80%;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<h1>登陆成功！欢迎[[${session.loginUser}]]进入首页！</h1>
+<div class="content">
+    <div th:replace="~{commons/commons::side_bar(active = 'index.html')}"></div>
+    <div class="main"></div>
+</div>
+
+</body>
+</html>
