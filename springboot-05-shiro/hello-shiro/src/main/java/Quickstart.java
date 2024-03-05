@@ -61,11 +61,16 @@ public class Quickstart {
         // Now that a simple Shiro environment is set up, let's see what you can do:
 
         // get the currently executing user:
+        // 获取当前用户
         Subject currentUser = SecurityUtils.getSubject();
 
         // Do some stuff with a Session (no need for a web or EJB container!!!)
+        // 获取当前用户的Session
         Session session = currentUser.getSession();
+        // Session赋值
         session.setAttribute("someKey", "aValue");
+
+        // 获得Session
         String value = (String) session.getAttribute("someKey");
         if (value.equals("aValue")) {
             log.info("Retrieved the correct value! [" + value + "]");
