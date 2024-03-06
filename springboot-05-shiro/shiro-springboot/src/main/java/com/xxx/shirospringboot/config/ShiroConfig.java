@@ -9,32 +9,46 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * @author Chenix
  * @create 2024-03-06 0:18
  */
 @Configuration
 public class ShiroConfig {
-    //ShiroFilterFactoryBean
+    //ShiroFilterFactoryBean：3
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager  securityManager){
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-        return shiroFilterFactoryBean;
-
+        ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
+        // 设置安全管理器
+        bean.setSecurityManager(securityManager);
+        // 添加shiro内置过滤器
+        /*
+        * anon：无需认证即可访问
+        * authc：必须认证了才能访问
+        * user：必须拥有 “记住我” 功能才能用
+        * perms：拥有对某个资源的权限才能访问
+        * role：拥有某个角色权限才能访问
+        * */
+        Map<String, String> filterMap = new LinkedHashMap<>();
+        filterMap.put("/user/add","anon");
+        filterMap.put("/user/update","authc");
+        bean.setFilterChainDefinitionMap(filterMap);
+        return bean;
     }
 
-    // DefaultWebSecurityManager
+    // DefaultWebSecurityManager：2
     @Bean(name = "securityManager")
     public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 关联userRealm,管理userRealm
         securityManager.setRealm(userRealm);
-
         return securityManager;
     }
 
-    // 创建realm对象，需要自定义类
+    // 创建realm对象，需要自定义类：1
     @Bean(name = "userRealm")
     public UserRealm userRealm() {
         return new UserRealm();
