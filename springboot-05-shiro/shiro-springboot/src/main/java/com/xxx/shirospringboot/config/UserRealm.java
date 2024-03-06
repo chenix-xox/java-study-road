@@ -1,11 +1,16 @@
 package com.xxx.shirospringboot.config;
 
+import com.xxx.shirospringboot.pojo.User;
+import com.xxx.shirospringboot.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 /**
  * 自定义的UserRealm
@@ -14,6 +19,9 @@ import org.apache.shiro.subject.Subject;
  * @create 2024-03-06 0:26
  */
 public class UserRealm extends AuthorizingRealm {
+    @Autowired
+    private UserService userService;
+
     // 授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -25,16 +33,15 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         System.out.println("执行了认证");
-        // 登录就会走这边
-        // 验证用户名和密码，一般从数据库中取
-        // 此处token对应登录Controller中生成的token，可以强转取值比较
-        String username = "admin";
-        String password = "admin";
+        // 连接数据库
         UsernamePasswordToken userToken = (UsernamePasswordToken) token;
-        if (userToken.getUsername().equals(username)) {
-            // 抛出异常：UnknownAccountException
+        User user = userService.queryUserByName(userToken.getUsername());
+        if (StringUtils.isEmpty(user)) {
             return null;
         }
-        return new SimpleAuthenticationInfo("", password, "");
+
+        // 密码认证：shiro完成，加密
+        // 可以加密 -> md5 / md5盐
+        return new SimpleAuthenticationInfo("", user.getPwd(), "");
     }
 }
