@@ -25,7 +25,6 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         System.out.println("执行了认证");
-
         // 登录就会走这边
         // 验证用户名和密码，一般从数据库中取
         // 此处token对应登录Controller中生成的token，可以强转取值比较
