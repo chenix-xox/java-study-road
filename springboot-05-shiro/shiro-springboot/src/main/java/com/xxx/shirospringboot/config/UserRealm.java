@@ -1,11 +1,11 @@
 package com.xxx.shirospringboot.config;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 
 /**
  * 自定义的UserRealm
@@ -25,6 +25,17 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         System.out.println("执行了认证");
-        return null;
+
+        // 登录就会走这边
+        // 验证用户名和密码，一般从数据库中取
+        // 此处token对应登录Controller中生成的token，可以强转取值比较
+        String username = "admin";
+        String password = "admin";
+        UsernamePasswordToken userToken = (UsernamePasswordToken) token;
+        if (userToken.getUsername().equals(username)) {
+            // 抛出异常：UnknownAccountException
+            return null;
+        }
+        return new SimpleAuthenticationInfo("", password, "");
     }
 }

@@ -35,8 +35,7 @@ public class ShiroConfig {
         * */
         // 拦截
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/user/add","anon");
-        filterMap.put("/user/update","authc");
+        filterMap.put("/user/*","authc");
         bean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登陆的请求
