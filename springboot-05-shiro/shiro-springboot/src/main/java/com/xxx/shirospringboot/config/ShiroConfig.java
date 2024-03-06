@@ -24,6 +24,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         // 设置安全管理器
         bean.setSecurityManager(securityManager);
+
         // 添加shiro内置过滤器
         /*
         * anon：无需认证即可访问
@@ -32,10 +33,14 @@ public class ShiroConfig {
         * perms：拥有对某个资源的权限才能访问
         * role：拥有某个角色权限才能访问
         * */
+        // 拦截
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/user/add","anon");
         filterMap.put("/user/update","authc");
         bean.setFilterChainDefinitionMap(filterMap);
+
+        // 设置登陆的请求
+        bean.setLoginUrl("/toLogin");
         return bean;
     }
 
