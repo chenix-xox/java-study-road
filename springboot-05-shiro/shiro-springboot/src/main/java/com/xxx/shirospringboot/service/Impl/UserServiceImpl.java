@@ -5,6 +5,7 @@ import com.xxx.shirospringboot.pojo.User;
 import com.xxx.shirospringboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * @author Chenix
@@ -18,10 +19,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User queryUserByName(String name) {
         User user = userMapper.queryUserByName(name);
-        System.out.println("user：" + user);
-        System.out.println("id：" + user.getId());
-        System.out.println("user：" + user.getName());
-        System.out.println("pwd：" + user.getPwd());
+        if (!StringUtils.isEmpty(user)) {
+            System.out.println("user：" + user);
+            System.out.println("id：" + user.getId());
+            System.out.println("user：" + user.getName());
+            System.out.println("pwd：" + user.getPwd());
+        }
         return user;
     }
 }

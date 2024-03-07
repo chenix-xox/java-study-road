@@ -20,26 +20,33 @@ import java.util.Map;
 public class ShiroConfig {
     //ShiroFilterFactoryBean：3
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager  securityManager){
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         // 设置安全管理器
         bean.setSecurityManager(securityManager);
 
         // 添加shiro内置过滤器
         /*
-        * anon：无需认证即可访问
-        * authc：必须认证了才能访问
-        * user：必须拥有 “记住我” 功能才能用
-        * perms：拥有对某个资源的权限才能访问
-        * role：拥有某个角色权限才能访问
-        * */
+         * anon：无需认证即可访问
+         * authc：必须认证了才能访问
+         * user：必须拥有 “记住我” 功能才能用
+         * perms：拥有对某个资源的权限才能访问
+         * role：拥有某个角色权限才能访问
+         * */
         // 拦截
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/user/*","authc");
+
+        // 授权，正常情况下，没有授权会跳转到未授权页面
+        filterMap.put("/user/add", "perms[user:add]");
+        filterMap.put("/user/update", "perms[user:update]");
+        filterMap.put("/user/*", "authc");
         bean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登陆的请求
         bean.setLoginUrl("/toLogin");
+
+        // 设置未授权页面
+        bean.setUnauthorizedUrl("/noauth");
         return bean;
     }
 

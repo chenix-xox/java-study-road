@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -26,7 +27,13 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         System.out.println("执行了授权");
-        return null;
+
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getPrincipal();
+        info.addStringPermission(user.getPerms());
+
+        return info;
     }
 
     // 认证
@@ -42,6 +49,6 @@ public class UserRealm extends AuthorizingRealm {
 
         // 密码认证：shiro完成，加密
         // 可以加密 -> md5 / md5盐
-        return new SimpleAuthenticationInfo("", user.getPwd(), "");
+        return new SimpleAuthenticationInfo(user, user.getPwd(), "");
     }
 }

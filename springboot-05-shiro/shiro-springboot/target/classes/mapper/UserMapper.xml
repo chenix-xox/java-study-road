@@ -4,7 +4,7 @@
 <mapper namespace="com.xxx.shirospringboot.mapper.UserMapper">
 
     <select id="queryUserByName" resultType="com.xxx.shirospringboot.pojo.User">
-        select id, name, pwd
+        select *
         from test.user
         where name = #{name}
     </select>

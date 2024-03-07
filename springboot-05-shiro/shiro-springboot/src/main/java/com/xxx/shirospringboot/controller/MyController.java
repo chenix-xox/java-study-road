@@ -62,4 +62,11 @@ public class MyController {
             return "login";
         }
     }
+
+    @RequestMapping("/noauth")
+    @ResponseBody
+    public String unauthorized(){
+        return "未经授权，无法访问！";
+    }
+
 }
