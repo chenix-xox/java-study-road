@@ -8,6 +8,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
-        if (!StringUtils.isEmpty(user.getPerms())){
+        if (!StringUtils.isEmpty(user.getPerms())) {
             info.addStringPermission(user.getPerms());
         }
 
@@ -48,6 +49,12 @@ public class UserRealm extends AuthorizingRealm {
         if (StringUtils.isEmpty(user)) {
             return null;
         }
+
+//
+//        // 认证成功说明登陆成功，添加Session用来控制是否显示登录按钮
+//        Subject subject = SecurityUtils.getSubject();
+//        Session session = subject.getSession();
+//        session.setAttribute("loginUser", user.getName());
 
         // 密码认证：shiro完成，加密
         // 可以加密 -> md5 / md5盐
