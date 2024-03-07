@@ -1,5 +1,6 @@
 package com.xxx.shirospringboot.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -63,5 +64,11 @@ public class ShiroConfig {
     @Bean(name = "userRealm")
     public UserRealm userRealm() {
         return new UserRealm();
+    }
+
+
+    @Bean
+    public ShiroDialect getShiroDialect(){
+        return new ShiroDialect();
     }
 }
