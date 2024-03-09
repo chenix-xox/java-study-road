@@ -19,6 +19,7 @@
         <module name="Servlet01" />
         <module name="Servlet02" />
         <module name="spring-04-mvc" />
+        <module name="springboot-06-swagger" />
         <module name="download" />
         <module name="hello-shiro" />
         <module name="springboot-02-config" />
@@ -48,6 +49,7 @@
       <module name="springboot-03-web" target="17" />
       <module name="springboot-04-security" target="8" />
       <module name="springboot-05-shiro" target="17" />
+      <module name="springboot-06-swagger" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -57,6 +59,7 @@
       <module name="springboot-02-config" options="-parameters" />
       <module name="springboot-03-web" options="-parameters" />
       <module name="springboot-04-security" options="-parameters" />
+      <module name="springboot-06-swagger" options="-parameters" />
     </option>
   </component>
 </project>
