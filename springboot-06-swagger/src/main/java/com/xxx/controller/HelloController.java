@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create 2024-03-08 21:40
  */
 @RestController
+@RequestMapping("user")
 public class HelloController {
 
     @GetMapping("/hello")

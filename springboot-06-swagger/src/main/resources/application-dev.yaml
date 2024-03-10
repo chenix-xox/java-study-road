@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+#springdoc:
+#  api-docs:
+#    #是否开启文档功能
+#    enabled: true
+#    #swagger后端请求地址
+#    path: /api-docs
+#  swagger-ui:
+#    #自定义swagger前端请求路径，输入http：127.0.0.1:8080/test会自动重定向到swagger页面
+#    path: /swagger-ui.html
+#  #包扫描路径
+#  packages-to-scan: com.xxx.controller
+#  #这里定义了两个分组，可定义多个，也可以不定义
+#  group-configs:
+#    #分组名
+#    - group: admin
+#      #按路径匹配
+#      pathsToMatch: /admin/**
+#      #分组名
+#    - group: user
+#      #按包路径匹配
+#      packagesToScan: com.hello.api.user
+
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.xxx.controller
+    - group: 'body'
+      paths-to-match: '/body/**'
+      packages-to-scan: com.xxx.controller
+    - group: 'user'
+      paths-to-match: '/user/**'
+      packages-to-scan: com.xxx.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn

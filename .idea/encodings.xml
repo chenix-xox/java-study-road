@@ -7,5 +7,6 @@
     <file url="file://$PROJECT_DIR$/springboot-04-security/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot-05-shiro/shiro-springboot/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot-06-swagger/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-06-swagger/src/main/resources/application.yaml" charset="UTF-8" />
   </component>
 </project>
