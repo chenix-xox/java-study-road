@@ -44,7 +44,7 @@
       <module name="spring-06-ajax" target="8" />
       <module name="spring-07-interceptor" target="8" />
       <module name="spring-study" target="17" />
-      <module name="springboot-01-study-start" target="17" />
+      <module name="springboot-01-study-start" target="1.8" />
       <module name="springboot-02-config" target="17" />
       <module name="springboot-03-web" target="17" />
       <module name="springboot-04-security" target="8" />
