@@ -23,6 +23,7 @@
         <module name="download" />
         <module name="hello-shiro" />
         <module name="springboot-02-config" />
+        <module name="springboot-07-task" />
         <module name="springboot-01-study-start" />
         <module name="shiro-springboot" />
       </profile>
@@ -50,6 +51,7 @@
       <module name="springboot-04-security" target="8" />
       <module name="springboot-05-shiro" target="17" />
       <module name="springboot-06-swagger" target="17" />
+      <module name="springboot-07-task" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -60,6 +62,7 @@
       <module name="springboot-03-web" options="-parameters" />
       <module name="springboot-04-security" options="-parameters" />
       <module name="springboot-06-swagger" options="-parameters" />
+      <module name="springboot-07-task" options="-parameters" />
     </option>
   </component>
 </project>

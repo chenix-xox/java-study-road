@@ -25,6 +25,7 @@
       <module fileurl="file://$PROJECT_DIR$/springboot-04-security/springboot-04-security.iml" filepath="$PROJECT_DIR$/springboot-04-security/springboot-04-security.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-05-shiro/springboot-05-shiro.iml" filepath="$PROJECT_DIR$/springboot-05-shiro/springboot-05-shiro.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-06-swagger/springboot-06-swagger.iml" filepath="$PROJECT_DIR$/springboot-06-swagger/springboot-06-swagger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-07-task/springboot-07-task.iml" filepath="$PROJECT_DIR$/springboot-07-task/springboot-07-task.iml" />
     </modules>
   </component>
 </project>
