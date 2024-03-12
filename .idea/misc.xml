@@ -18,6 +18,8 @@
         <option value="$PROJECT_DIR$/springboot-05-shiro/shiro-springboot/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-06-swagger/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-07-task/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/provider-server/pom.xml" />
       </list>
     </option>
   </component>

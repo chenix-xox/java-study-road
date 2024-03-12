@@ -9,5 +9,6 @@
     <file url="file://$PROJECT_DIR$/springboot-06-swagger/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot-06-swagger/src/main/resources/application.yaml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot-07-task/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot-08-dubbo-zookeeper/provider-server/src/main/java" charset="UTF-8" />
   </component>
 </project>

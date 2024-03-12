@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/kuang_javaweb/JavaWeb/download/download.iml" filepath="$PROJECT_DIR$/kuang_javaweb/JavaWeb/download/download.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-05-shiro/hello-shiro/hello-shiro.iml" filepath="$PROJECT_DIR$/springboot-05-shiro/hello-shiro/hello-shiro.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/java-study-road.iml" filepath="$PROJECT_DIR$/.idea/java-study-road.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-08-dubbo-zookeeper/provider-server/provider-server.iml" filepath="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/provider-server/provider-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/kuang_javaweb/JavaWeb/request/request.iml" filepath="$PROJECT_DIR$/kuang_javaweb/JavaWeb/request/request.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-05-shiro/shiro-springboot/shiro-springboot.iml" filepath="$PROJECT_DIR$/springboot-05-shiro/shiro-springboot/shiro-springboot.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-study/spring-01-hello_spring/spring-01-hello_spring.iml" filepath="$PROJECT_DIR$/spring-study/spring-01-hello_spring/spring-01-hello_spring.iml" />
@@ -26,6 +27,7 @@
       <module fileurl="file://$PROJECT_DIR$/springboot-05-shiro/springboot-05-shiro.iml" filepath="$PROJECT_DIR$/springboot-05-shiro/springboot-05-shiro.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-06-swagger/springboot-06-swagger.iml" filepath="$PROJECT_DIR$/springboot-06-swagger/springboot-06-swagger.iml" />
       <module fileurl="file://$PROJECT_DIR$/springboot-07-task/springboot-07-task.iml" filepath="$PROJECT_DIR$/springboot-07-task/springboot-07-task.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-08-dubbo-zookeeper/springboot-08-dubbo-zookeeper.iml" filepath="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/springboot-08-dubbo-zookeeper.iml" />
     </modules>
   </component>
 </project>

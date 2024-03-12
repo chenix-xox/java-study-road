@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 public class ScheduledService {
 
     @Scheduled(cron = "0,1,2 3 2 * * ? ")
-    public void hello(){
+    public void hello() {
         System.out.println("执行了定时方法！");
     }
 
-    @Scheduled(cron ="*/6 * * * * ?")
+    @Scheduled(cron = "*/6 * * * * ?")
     public void sayHello() {
         System.out.println("hello");
     }

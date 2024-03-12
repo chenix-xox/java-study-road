@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="springboot-08-dubbo-zookeeper" />
         <module name="request" />
         <module name="spring-05-json" />
         <module name="spring-07-interceptor" />
@@ -18,6 +19,7 @@
         <module name="spring-01-hello_spring" />
         <module name="Servlet01" />
         <module name="Servlet02" />
+        <module name="provider-server" />
         <module name="spring-04-mvc" />
         <module name="springboot-06-swagger" />
         <module name="download" />
@@ -33,6 +35,7 @@
       <module name="download" target="8" />
       <module name="hello-shiro" target="8" />
       <module name="JavaWeb" target="8" />
+      <module name="provider-server" target="17" />
       <module name="request" target="8" />
       <module name="Servlet01" target="8" />
       <module name="Servlet02" target="8" />
@@ -52,10 +55,12 @@
       <module name="springboot-05-shiro" target="17" />
       <module name="springboot-06-swagger" target="17" />
       <module name="springboot-07-task" target="17" />
+      <module name="springboot-08-dubbo-zookeeper" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="provider-server" options="-parameters" />
       <module name="shiro-springboot" options="-parameters" />
       <module name="springboot-01-study-start" options="-parameters" />
       <module name="springboot-02-config" options="-parameters" />
