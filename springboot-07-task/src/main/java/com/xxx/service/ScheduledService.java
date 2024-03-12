@@ -15,6 +15,7 @@ public class ScheduledService {
         System.out.println("执行了定时方法！");
     }
 
+
     @Scheduled(cron = "*/6 * * * * ?")
     public void sayHello() {
         System.out.println("hello");
