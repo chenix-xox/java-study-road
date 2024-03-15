@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/kuang_javaweb/cookie_session" />
+    <file type="web" url="file://$PROJECT_DIR$/springboot-08-dubbo-zookeeper/consumer-server" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -21,7 +22,15 @@
         <option value="$PROJECT_DIR$/springboot-07-task/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/provider-server/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/comsumer-server/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/consumer-server/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/comsumer-server/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="17" project-jdk-type="JavaSDK" />
