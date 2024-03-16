@@ -13,6 +13,6 @@ import org.springframework.stereotype.Service;
 public class TicketServiceImpl implements TicketService {
     @Override
     public String getTicket(String name) {
-        return "《 " + name + "》";
+        return "《" + name + "》";
     }
 }

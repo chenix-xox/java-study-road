@@ -24,23 +24,21 @@
         <module name="spring-04-mvc" />
         <module name="springboot-06-swagger" />
         <module name="download" />
+        <module name="consumer-server" />
         <module name="hello-shiro" />
         <module name="springboot-02-config" />
         <module name="springboot-07-task" />
         <module name="springboot-01-study-start" />
         <module name="shiro-springboot" />
-        <module name="consumer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17">
       <module name="comsumer-server" target="17" />
-      <module name="consumer-server" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="comsumer-server" options="-parameters" />
-      <module name="consumer" options="-parameters" />
       <module name="consumer-server" options="-parameters" />
       <module name="provider-server" options="-parameters" />
       <module name="shiro-springboot" options="-parameters" />
