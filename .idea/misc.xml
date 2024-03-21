@@ -25,6 +25,9 @@
         <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/comsumer-server/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/consumer/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/consumer-server/pom.xml" />
+        <option value="$PROJECT_DIR$/redis-road/pom.xml" />
+        <option value="$PROJECT_DIR$/redis-road/redis-01-jedis/pom.xml" />
+        <option value="$PROJECT_DIR$/redis-road/redis-02-springboot/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

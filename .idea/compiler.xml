@@ -7,38 +7,37 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="springboot-08-dubbo-zookeeper" />
         <module name="request" />
-        <module name="spring-05-json" />
         <module name="spring-07-interceptor" />
-        <module name="spring-02-proxy" />
         <module name="spring-06-ajax" />
         <module name="springboot-04-security" />
-        <module name="spring-03-aop" />
         <module name="cookie_session" />
-        <module name="springboot-03-web" />
         <module name="spring-01-hello_spring" />
-        <module name="Servlet01" />
-        <module name="Servlet02" />
-        <module name="provider-server" />
+        <module name="redis-02-springboot" />
         <module name="spring-04-mvc" />
-        <module name="springboot-06-swagger" />
         <module name="download" />
         <module name="consumer-server" />
         <module name="hello-shiro" />
-        <module name="springboot-02-config" />
         <module name="springboot-07-task" />
         <module name="springboot-01-study-start" />
+        <module name="springboot-08-dubbo-zookeeper" />
+        <module name="spring-05-json" />
+        <module name="spring-02-proxy" />
+        <module name="spring-03-aop" />
+        <module name="springboot-03-web" />
+        <module name="Servlet01" />
+        <module name="Servlet02" />
+        <module name="provider-server" />
+        <module name="springboot-06-swagger" />
+        <module name="springboot-02-config" />
+        <module name="redis-01-jedis" />
         <module name="shiro-springboot" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17">
-      <module name="comsumer-server" target="17" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="comsumer-server" options="-parameters" />
       <module name="consumer-server" options="-parameters" />
       <module name="provider-server" options="-parameters" />
       <module name="shiro-springboot" options="-parameters" />
