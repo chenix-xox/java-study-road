@@ -1,0 +1,10 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8080
+spring:
+  data:
+    redis:
+      host: 120.27.199.182
+      port: 6379
+      password: 20011215
+
