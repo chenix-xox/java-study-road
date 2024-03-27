@@ -1,0 +1,17 @@
+package com.chenix.cloud;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
+
+/**
+ * @author Chenix
+ * @create_date 2024/3/28 0:51
+ */
+@SpringBootApplication
+@MapperScan("com.chenix.cloud.mapper")
+public class Main8001 {
+    public static void main(String[] args) {
+        SpringApplication.run(Main8001.class);
+    }
+}
