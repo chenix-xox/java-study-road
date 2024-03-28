@@ -12,8 +12,14 @@ spring:
     url: jdbc:mysql://localhost:3306/scloud2024?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
     username: root
     password: 20011215
-
-#  时间格式
+  cloud:
+    # consul 配置
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+  #  时间格式
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
