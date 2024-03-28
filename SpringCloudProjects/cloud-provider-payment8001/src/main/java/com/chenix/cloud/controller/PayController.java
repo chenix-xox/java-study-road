@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -82,5 +83,14 @@ public class PayController {
             return ResultData.fail(ReturnCodeEnum.RC500);
         }
         return ResultData.success("谢谢测试");
+    }
+
+    @Value("${server.port}")
+    private String port;
+
+
+    @GetMapping("/getInfo")
+    public String getInfo(@Value("${chenix.info}") String msg) {
+        return msg + ":" + port;
     }
 }
