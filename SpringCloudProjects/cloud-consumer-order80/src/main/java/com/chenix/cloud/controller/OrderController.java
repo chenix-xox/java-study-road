@@ -15,24 +15,24 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/order/pay")
 public class OrderController {
-    public static final String PaymentSrv_URL = "http://localhost:8001";
+    public static final String PAYMENT_SRV_URL = "http://localhost:8001";
 
     @Resource
     private RestTemplate restTemplate;
 
     @PostMapping(value = "/add")
     public ResultData addOrder(PayDTO payDTO) {
-        return restTemplate.postForObject(PaymentSrv_URL + "/pay/add", payDTO, ResultData.class);
+        return restTemplate.postForObject(PAYMENT_SRV_URL + "/pay/add", payDTO, ResultData.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public void deleteOrder(@PathVariable("id") Integer id) {
-        restTemplate.delete(PaymentSrv_URL + "/pay/delete/" + id, id);
+        restTemplate.delete(PAYMENT_SRV_URL + "/pay/delete/" + id, id);
     }
 
     @GetMapping(value = "/get/{id}")
     public ResultData getById(@PathVariable("id") Integer id) {
-        return restTemplate.getForObject(PaymentSrv_URL + "/pay/get/" + id, ResultData.class, id);
+        return restTemplate.getForObject(PAYMENT_SRV_URL + "/pay/get/" + id, ResultData.class, id);
     }
 
     @PutMapping(value = "/update")
@@ -42,7 +42,7 @@ public class OrderController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<>(JSON.toJSON(payDTO).toString(), headers);
         ResponseEntity<ResultData> exchange = restTemplate.exchange(
-                PaymentSrv_URL + "/pay/update",
+                PAYMENT_SRV_URL + "/pay/update",
                 HttpMethod.PUT,
                 request,
                 ResultData.class
@@ -52,6 +52,6 @@ public class OrderController {
 
     @GetMapping(value = "/getAll")
     public ResultData getAll() {
-        return restTemplate.getForObject(PaymentSrv_URL + "/pay/all", ResultData.class);
+        return restTemplate.getForObject(PAYMENT_SRV_URL + "/pay/all", ResultData.class);
     }
 }
