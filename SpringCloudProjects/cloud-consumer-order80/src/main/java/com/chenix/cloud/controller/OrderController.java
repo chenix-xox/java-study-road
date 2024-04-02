@@ -4,9 +4,13 @@ import com.alibaba.fastjson2.JSON;
 import com.chenix.cloud.entities.PayDTO;
 import com.chenix.cloud.resp.ResultData;
 import jakarta.annotation.Resource;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 /**
  * @author Chenix
@@ -53,5 +57,30 @@ public class OrderController {
     @GetMapping(value = "/getAll")
     public ResultData getAll() {
         return restTemplate.getForObject(PAYMENT_SRV_URL + "/pay/all", ResultData.class);
+    }
+
+    @GetMapping(value = "/getInfo")
+    public String getInfo() {
+        return restTemplate.getForObject(PAYMENT_SRV_URL + "/pay/getInfo", String.class);
+    }
+
+    @Resource
+    private DiscoveryClient discoveryClient;
+
+    @GetMapping("/discovery")
+    public String discovery() {
+        List<String> services = discoveryClient.getServices();
+        for (String element : services) {
+            System.out.println(element);
+        }
+
+        System.out.println("===================================");
+
+        List<ServiceInstance> instances = discoveryClient.getInstances("cloud-payment-service");
+        for (ServiceInstance element : instances) {
+            System.out.println(element.getServiceId() + "\t" + element.getHost() + "\t" + element.getPort() + "\t" + element.getUri());
+        }
+
+        return instances.get(0).getServiceId() + ":" + instances.get(0).getPort();
     }
 }
