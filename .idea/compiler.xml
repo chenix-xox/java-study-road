@@ -18,6 +18,7 @@
         <module name="download" />
         <module name="consumer-server" />
         <module name="hello-shiro" />
+        <module name="socket-server" />
         <module name="springboot-07-task" />
         <module name="springboot-01-study-start" />
         <module name="springboot-08-dubbo-zookeeper" />
@@ -31,10 +32,13 @@
         <module name="springboot-06-swagger" />
         <module name="springboot-02-config" />
         <module name="redis-01-jedis" />
+        <module name="socket-client" />
         <module name="shiro-springboot" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="socket-test" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

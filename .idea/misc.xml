@@ -28,10 +28,12 @@
         <option value="$PROJECT_DIR$/redis-road/pom.xml" />
         <option value="$PROJECT_DIR$/redis-road/redis-01-jedis/pom.xml" />
         <option value="$PROJECT_DIR$/redis-road/redis-02-springboot/pom.xml" />
+        <option value="$PROJECT_DIR$/chenix-rpc-road/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/chenix-rpc-road/socket-test/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-08-dubbo-zookeeper/comsumer-server/pom.xml" />
       </set>
     </option>
