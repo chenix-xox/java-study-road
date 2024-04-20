@@ -19,11 +19,16 @@
         <module name="consumer-server" />
         <module name="hello-shiro" />
         <module name="socket-server" />
+        <module name="mybatis_generator2024" />
         <module name="springboot-07-task" />
         <module name="springboot-01-study-start" />
+        <module name="cloud-consumer-feign-order80" />
         <module name="springboot-08-dubbo-zookeeper" />
         <module name="spring-05-json" />
+        <module name="cloud-provider-payment8002" />
         <module name="spring-02-proxy" />
+        <module name="cloud-api-commons" />
+        <module name="cloud-provider-payment8001" />
         <module name="spring-03-aop" />
         <module name="springboot-03-web" />
         <module name="Servlet01" />
@@ -33,12 +38,11 @@
         <module name="springboot-02-config" />
         <module name="redis-01-jedis" />
         <module name="socket-client" />
+        <module name="cloud-consumer-order80" />
         <module name="shiro-springboot" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17">
-      <module name="socket-test" target="17" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

@@ -29,6 +29,7 @@
         <option value="$PROJECT_DIR$/redis-road/redis-01-jedis/pom.xml" />
         <option value="$PROJECT_DIR$/redis-road/redis-02-springboot/pom.xml" />
         <option value="$PROJECT_DIR$/chenix-rpc-road/pom.xml" />
+        <option value="$PROJECT_DIR$/SpringCloudProjects/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
