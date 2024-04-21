@@ -1,9 +1,11 @@
 package com.chenix.cloud.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson2.JSON;
 import com.chenix.cloud.apis.PayFeignApi;
 import com.chenix.cloud.entities.PayDTO;
 import com.chenix.cloud.resp.ResultData;
+import com.chenix.cloud.resp.ReturnCodeEnum;
 import jakarta.annotation.Resource;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -30,7 +32,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/mylb")
-    public String getInfo(){
+    public String getInfo() {
         System.out.println("模拟getInfo");
         return payFeignApi.getInfo();
     }
@@ -38,6 +40,16 @@ public class OrderController {
     @GetMapping(value = "/get/{id}")
     public ResultData getPayById(@PathVariable("id") Integer id) {
         System.out.println("模拟getById");
-        return payFeignApi.getPayById(id);
+        ResultData resultData = null;
+        try {
+            System.out.println("start at ： " + DateUtil.now());
+            resultData = payFeignApi.getPayById(id);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("end at ： " + DateUtil.now());
+            ResultData.fail(ReturnCodeEnum.RC500.getCode(), e.getMessage());
+        }
+        return resultData;
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Chenix
@@ -58,10 +59,15 @@ public class PayController {
     @Operation(summary = "根据ID获取支付记录", description = "根据ID检索支付记录详情")
     @GetMapping(value = "/get/{id}")
     public ResultData<Pay> getPayById(@PathVariable("id") Integer id) {
-        Pay pay = payService.getById(id);
         if (id < 0) {
             throw new RuntimeException("id不能为负数");
         }
+        try {
+            TimeUnit.SECONDS.sleep(61);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Pay pay = payService.getById(id);
         return ResultData.success(pay, "获取支付记录成功");
     }
 
