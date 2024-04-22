@@ -44,7 +44,6 @@ public class OrderController {
         try {
             System.out.println("start at ： " + DateUtil.now());
             resultData = payFeignApi.getPayById(id);
-
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("end at ： " + DateUtil.now());
