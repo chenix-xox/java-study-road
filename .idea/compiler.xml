@@ -35,6 +35,7 @@
         <module name="Servlet02" />
         <module name="provider-server" />
         <module name="springboot-06-swagger" />
+        <module name="OwnTry" />
         <module name="springboot-02-config" />
         <module name="redis-01-jedis" />
         <module name="socket-client" />
