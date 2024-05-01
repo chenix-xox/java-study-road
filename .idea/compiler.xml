@@ -17,6 +17,7 @@
         <module name="spring-04-mvc" />
         <module name="download" />
         <module name="consumer-server" />
+        <module name="MyBatisPlusDemo" />
         <module name="hello-shiro" />
         <module name="socket-server" />
         <module name="mybatis_generator2024" />

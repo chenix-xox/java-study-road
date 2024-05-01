@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/MyBatisPlusDemo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MyBatisPlusDemo/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/OwnTry/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/OwnTry/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SpringCloudProjects/cloud-api-commons/src/main/java" charset="UTF-8" />
