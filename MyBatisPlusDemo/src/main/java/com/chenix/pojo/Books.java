@@ -1,7 +1,6 @@
 package com.chenix.pojo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 /**
@@ -11,6 +10,8 @@ import lombok.Data;
 @Data
 @TableName("t_book")
 public class Books {
+    @TableId(type = IdType.AUTO)
+    @OrderBy
     private Long id;
     @TableField("bookImg")
     private String bookImg;
