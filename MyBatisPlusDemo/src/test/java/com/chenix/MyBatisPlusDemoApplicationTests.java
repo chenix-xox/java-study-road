@@ -30,7 +30,7 @@ class MyBatisPlusDemoApplicationTests {
         // 查询所有数据
         List<Books> userList = booksMapper.selectList(booksQueryWrapper);
         userList.forEach(System.out::println);
-        System.out.println("===========================");
+        System.out.println("=============QAQ==============");
         Books byIdBook = booksService.getById(1);
         System.out.println(byIdBook);
     }
