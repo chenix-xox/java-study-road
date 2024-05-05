@@ -21,5 +21,9 @@ public class MyBatisPlusPageTest {
         Page<Books> page = new Page<>(2, 3);
         booksMapper.selectPage(page, null);
         System.out.println(page.getRecords());
+
+        System.out.println("===================QAQ");
+        booksMapper.selectPageByPrice(page, 10, 30);
+        System.out.println(page.getRecords());
     }
 }
