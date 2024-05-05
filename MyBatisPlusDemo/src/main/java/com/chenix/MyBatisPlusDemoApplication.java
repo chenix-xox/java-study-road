@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.chenix.mapper")
+
 public class MyBatisPlusDemoApplication {
 
     public static void main(String[] args) {

@@ -41,7 +41,10 @@ class MyBatisPlusDemoApplicationTests {
 
         String bookName = "传";
         LambdaQueryWrapper<Books> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(bookName),Books::getBookName,bookName);
+        lambdaQueryWrapper.like(StringUtils.isNotBlank(bookName), Books::getBookName, bookName);
+
+        QueryWrapper<Books> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(bookName),"bookName",bookName);
         List<Books> books = booksMapper.selectList(lambdaQueryWrapper);
         books.forEach(System.out::println);
     }
