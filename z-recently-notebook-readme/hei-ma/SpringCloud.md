@@ -1,6 +1,10 @@
-## 特别鸣谢 - 教程视频
+## 特别鸣谢
 
-https://www.bilibili.com/video/BV1S142197x7
+**教程视频：**https://www.bilibili.com/video/BV1S142197x7
+
+**飞书笔记：**[day03-微服务01 - 飞书云文档 (feishu.cn)](https://b11et3un53m.feishu.cn/wiki/R4Sdwvo8Si4kilkSKfscgQX0niB)
+
+
 
 
 
