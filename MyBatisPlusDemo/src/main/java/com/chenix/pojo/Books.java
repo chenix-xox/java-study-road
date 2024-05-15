@@ -23,4 +23,7 @@ public class Books {
     private Integer saleCount;
     @TableField("bookCount")
     private Integer bookCount;
+
+    @Version
+    private Integer version;
 }
