@@ -23,4 +23,14 @@ public interface PayFeignApi {
 
     @PostMapping(value = "/add")
     public ResultData<String> addPay(@RequestBody PayDTO payDTO);
+
+    /**
+     * @description Resilience4j CircuitBreaker例子
+     * @param id
+     * @return java.lang.String
+     * @author chenix
+     * @date 2024/6/6 16:01
+     */
+    @GetMapping(value = "/pay/circuit/{id}")
+    public String myCircuit(@PathVariable("id") Integer id);
 }

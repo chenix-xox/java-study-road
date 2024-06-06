@@ -1,4 +1,4 @@
-package com.chenix.cloud.mapper.impl;
+package com.chenix.cloud.service.impl;
 
 import com.chenix.cloud.entities.Pay;
 import com.chenix.cloud.mapper.PayMapper;
