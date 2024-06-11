@@ -16,5 +16,6 @@ public class MainOpenFeign80
 {
     public static void main(String[] args){
         SpringApplication.run(MainOpenFeign80.class,args);
+        System.out.println("OpenFeign80 start success!");
     }
 }

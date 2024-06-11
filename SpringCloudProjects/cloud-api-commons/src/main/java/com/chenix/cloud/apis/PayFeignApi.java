@@ -25,12 +25,22 @@ public interface PayFeignApi {
     public ResultData<String> addPay(@RequestBody PayDTO payDTO);
 
     /**
-     * @description Resilience4j CircuitBreaker例子
      * @param id
      * @return java.lang.String
+     * @description Resilience4j CircuitBreaker例子
      * @author chenix
      * @date 2024/6/6 16:01
      */
     @GetMapping(value = "/pay/circuit/{id}")
     public String myCircuit(@PathVariable("id") Integer id);
+
+    /**
+     * @param id
+     * @return java.lang.String
+     * @description Resilience4j Bulkhead例子
+     * @author chenix
+     * @date 2024/6/11 16:28
+     */
+    @GetMapping(value = "/pay/bulkhead/{id}")
+    public String myBulkhead(@PathVariable("id") Integer id);
 }
