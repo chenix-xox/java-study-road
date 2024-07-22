@@ -19,7 +19,7 @@ public class PayCircuitController {
     //=========Resilience4j CircuitBreaker 的例子
     @GetMapping(value = "/pay/circuit/{id}")
     public String myCircuit(@PathVariable("id") Integer id) {
-        log.info("8001!!!!!!!!!!!!!!!");
+        log.info("8002!!!!!!");
         if (id == -4) {
             throw new RuntimeException("----circuit id 不能负数");
         }
@@ -30,6 +30,6 @@ public class PayCircuitController {
                 e.printStackTrace();
             }
         }
-        return "Hello【8001】, circuit! inputId:  " + id + " \t " + IdUtil.simpleUUID();
+        return "Hello【8002】, circuit! inputId:  " + id + " \t " + IdUtil.simpleUUID();
     }
 }
