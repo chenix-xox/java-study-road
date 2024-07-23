@@ -19,7 +19,6 @@ public class PayBulkheadController {
     //=========Resilience4j bulkhead 的例子
     @GetMapping(value = "/pay/bulkhead/{id}")
     public String myBulkhead(@PathVariable("id") Integer id) {
-        log.info("又来舱壁？");
         if (id == -4) {
             throw new RuntimeException("----bulkhead id 不能-4");
         }
@@ -30,6 +29,6 @@ public class PayBulkheadController {
                 e.printStackTrace();
             }
         }
-        return "Hello【8001】, bulkhead! inputId:  " + id + " \t " + IdUtil.simpleUUID();
+        return "Hello【8002】, bulkhead! inputId:  " + id + " \t " + IdUtil.simpleUUID();
     }
 }
