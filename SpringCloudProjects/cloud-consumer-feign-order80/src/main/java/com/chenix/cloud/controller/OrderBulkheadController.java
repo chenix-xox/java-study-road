@@ -25,9 +25,6 @@ public class OrderBulkheadController {
 
     /**
      * (船的)舱壁,隔离 信号舱壁
-     *
-     * @param id
-     * @return
      */
     @GetMapping(value = "/feign/pay/bulkhead/semaphore/{id}")
     @Bulkhead(name = "cloud-payment-service", fallbackMethod = "myBulkheadFallback", type = Bulkhead.Type.SEMAPHORE)
@@ -37,17 +34,17 @@ public class OrderBulkheadController {
     }
 
     public String myBulkheadFallback(Throwable t) {
-        return "myBulkheadFallback，隔板超出最大数量限制，系统繁忙，请稍后再试-----/(ㄒoㄒ)/~~";
+        return "【myBulkheadFallback】信号舱壁-隔板超出最大数量限制，系统繁忙，请稍后再试-----/(ㄒoㄒ)/~~";
     }
 
 
     /**
-     * (船的)舱壁,隔离,THREADPOOL
+     * (船的)舱壁,隔离,THREAD POOL
      *
      * @param id
      * @return
      */
-    @GetMapping(value = "/feign/pay/bulkhead/{id}")
+    @GetMapping(value = "/feign/pay/bulkhead/threadpool/{id}")
     @Bulkhead(name = "cloud-payment-service", fallbackMethod = "myBulkheadPoolFallback", type = Bulkhead.Type.THREADPOOL)
     public CompletableFuture<String> myBulkheadTHREADPOOL(@PathVariable("id") Integer id) {
         System.out.println(Thread.currentThread().getName() + "\t" + "enter the method!!!");
@@ -62,6 +59,6 @@ public class OrderBulkheadController {
     }
 
     public CompletableFuture<String> myBulkheadPoolFallback(Integer id, Throwable t) {
-        return CompletableFuture.supplyAsync(() -> "Bulkhead.Type.THREADPOOL，系统繁忙，请稍后再试-----/(ㄒoㄒ)/~~");
+        return CompletableFuture.supplyAsync(() -> "【固定线程池舱壁】Bulkhead.Type.THREAD POOL，系统繁忙，请稍后再试-----/(ㄒoㄒ)/~~");
     }
 }
