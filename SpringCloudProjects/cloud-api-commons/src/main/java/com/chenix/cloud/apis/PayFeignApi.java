@@ -43,4 +43,14 @@ public interface PayFeignApi {
      */
     @GetMapping(value = "/pay/bulkhead/{id}")
     public String myBulkhead(@PathVariable("id") Integer id);
+
+    /**
+     * @description 测试限流接口
+     * @param id 随便传ID
+     * @return java.lang.String
+     * @author chenix
+     * @date 2024/7/25 10:53
+     */
+    @GetMapping(value = "/pay/ratelimit/{id}")
+    public String myRateLimit(@PathVariable("id") Integer id);
 }
