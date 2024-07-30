@@ -1,5 +1,6 @@
 package com.chenix.cloud.apis;
 
+import cn.hutool.core.util.IdUtil;
 import com.chenix.cloud.entities.PayDTO;
 import com.chenix.cloud.resp.ResultData;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author Chenix
  * @create_date 2024/4/21 1:44
  */
-@FeignClient(value = "cloud-payment-service")
+@FeignClient(value = "cloud-gateway")
+//@FeignClient(value = "cloud-payment-service")
 public interface PayFeignApi {
     @GetMapping("/pay/getInfo")
     public String getInfo();
@@ -60,4 +62,20 @@ public interface PayFeignApi {
      */
     @GetMapping(value = "/pay/micrometer/{id}")
     public String myMicrometer(@PathVariable("id") Integer id);
+
+    /**
+     * @description 网关测试接口1
+     * @author chenix
+     * @date 2024/7/30 23:13
+     */
+    @GetMapping(value = "/pay/gateway/get/{id}")
+    public ResultData getById(@PathVariable("id") Integer id);
+
+    /**
+     * @description 网关测试接口2
+     * @author chenix
+     * @date 2024/7/30 23:13
+     */
+    @GetMapping(value = "/pay/gateway/info")
+    public ResultData<String> getGatewayInfo();
 }
