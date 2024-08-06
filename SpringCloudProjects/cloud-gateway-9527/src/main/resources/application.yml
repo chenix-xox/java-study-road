@@ -35,3 +35,6 @@ spring:
             - AddRequestHeader=X-Request-xxx2,xxx2
             - AddRequestParameter=customerId,9527001 # 新增请求参数Parameter：k ，v
             - RemoveRequestParameter=customerName   # 删除url请求参数customerName，你传递过来也是null
+            - AddResponseHeader=X-Response-atguigu, BlueResponse # 新增请求参数X-Response-atguigu并设值为BlueResponse
+            - SetResponseHeader=Date,2099-11-11 # 设置回应头Date值为2099-11-11
+            - RemoveResponseHeader=Content-Type # 将默认自带Content-Type回应属性删除
