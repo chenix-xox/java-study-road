@@ -1,4 +1,4 @@
-## 特别鸣谢-参考文档
+## 特别鸣谢-参考文档（24.04.02）
 
 [前言 | Docker — 从入门到实践 (gitbook.io)](https://yeasy.gitbook.io/docker_practice)
 
@@ -149,4 +149,138 @@ exit
 ```bash
 $ docker diff webserver
 ```
+
+
+
+
+
+
+
+## 重新起航（25.01.12）
+
+### 特别鸣谢-参考视频
+
+尚硅谷3小时速通Docker教程 https://www.bilibili.com/video/BV1Zn4y1X7AZ
+
+
+
+## 镜像操作
+
+- **检索**：`docker search`
+- **下载**：`docker pull`
+  - 指定版本：`docker pull nginx:latest`
+  - 在dockerHub搜索镜像，找到指定版本下载
+- **列表**：`docker images` = `docker image ls`
+- **删除**：`docker rmi`
+
+
+
+## 容器操作
+
+<u>**注意：** 操作命令后面接的名称，必须是容器名称，而不是镜像名称。也可以用容器编号，一般前三位即可</u>
+
+- **运行** ：`docker run`
+
+  - 直接 docker run nginx，会前台一直跑应用，一旦ctrl+c，应用也停了。**（阻死行为）**
+
+  - -d：后台启动
+
+  - --name：容器起名
+
+  - -p [外部端口]:[容器内部端口]：端口映射
+
+  - ```bash
+    -- 示例命令解释
+    -- 使用nginx镜像，后台启动一个名为ngtest的容器，并将其80端口暴露给主机的81端口使用
+    docker run -d --name ngtest -p 81:80 nginx
+    ```
+
+  - ```bash
+    -- mysql启动示例（需先创建 /home/mysql/{conf,data,log,mysql-files} ，并创建 my.cnf）
+    -p表示端口映射
+    --restart=always表示容器退出时总是重启
+    --name表示容器命名
+    --privileged=true表示赋予容器权限修改宿主文件权利
+    -v /home/mysql/log:/var/log/mysql表示容器日志挂载到宿主机
+    -v /home/mysql/data:/var/lib/mysql表示容器存储文件挂载到宿主机
+    -v /home/mysql/conf/my.cnf:/etc/mysql/my.cnf表示容器配置文件挂载到宿主机
+    -v /home/mysql/conf:/etc/mysql表示容器配置文件夹挂载到宿主机
+    -v /home/mysql/mysql-files:/var/lib/mysql-files (mysql 8.0.23安装需要)
+    -e MYSQL_ROOT_PASSWORD=a12bCd3_W45pUq6表示设置mysql的root用户密码,建议用强密码
+    -d 表示后台运行
+    
+    docker run \
+    -p 3306:3306 \
+    --restart=always \
+    --name mysql \
+    --privileged=true \
+    -v /home/mysql/log:/var/log/mysql \
+    -v /home/mysql/data:/var/lib/mysql \
+    -v /home/mysql/conf:/etc/mysql \
+    -e MYSQL_ROOT_PASSWORD=a12bCd3_W45pUq6 \
+    -d mysql:8.3.0  
+    
+    -- 开放外网连接
+    DROP USER 'root'@'localhost';
+    CREATE USER 'root'@'%' IDENTIFIED BY '123456';
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+    
+    -- 修改密码验证插件
+    ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
+    FLUSH PRIVILEGES;
+    ```
+
+    
+
+- **查看** ：`docker ps` （查看所有运行中的容器）
+
+  - -a：查看所有容器，包含不在运行中的
+
+- **停止** ：`docker stop`
+
+- **启动** ：`docker start`
+
+- **重启** ：`docker restart`
+
+- **状态** ：`docker stats`
+
+- **日志** ：`docker logs`
+
+- **进入** ：`docker exec`
+
+  - `-it` 交互模式
+  - 以控制台的方式，与mysql容器交互：`docker -it mysql /bin/bash`
+
+- **删除** ：`docker rm`
+
+  - docker rm -f [编号/名称] = 强制删除
+
+### TODO
+
+容器启动后，如何将忘记挂载的目录，重新挂载？
+
+
+
+## 保存镜像
+
+- **提交：** docker commit
+  - docker commit -m "提交信息..." [容器] [打包的镜像名称:v版本]
+  - 将xxx容器，打包为xxx镜像
+- **保存：** dokcer save
+  - docker save -o [文件名称（含后缀）] [镜像名称:版本号]
+  - 将xxx镜像，保存为一个具体的文件
+- **加载：** dokcer load
+  - docker load -i [文件名称]
+  - 加载保存的镜像文件，加载为镜像（docker images）
+
+
+
+## 分享镜像
+
+- **登录：** docker login
+  - 登录dockerhub的账号密码
+- **命名：** docker tag
+  - docker tag [镜像名称:版本号] [上传的命名:版本号]
+  - 上传最新版，最好不仅上传版本号的，还要上传lastest
+- **推送：** docker push
 
