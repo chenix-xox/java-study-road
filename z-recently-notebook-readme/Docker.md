@@ -183,11 +183,17 @@ $ docker diff webserver
 
   - 直接 docker run nginx，会前台一直跑应用，一旦ctrl+c，应用也停了。**（阻死行为）**
 
-  - -d：后台启动
+  - `-d`：后台启动
 
-  - --name：容器起名
+  - `--name`：容器名称
 
-  - -p [外部端口]:[容器内部端口]：端口映射
+  - `-p [外部端口]:[容器内部端口]` ： 端口映射
+
+  - `-v [卷名/目录路径/文件路径]:[容器内部目录路径or文件路径]` ： 容器内部内容 **挂载or卷映射** 到外部
+
+  - `--network [docker网络名称]` ： 容器应用启动时加入到指定的docker网络中
+
+  - `-e [环境变量名]=[环境变量值]` ： 设置容器的环境变量信息
 
   - ```bash
     -- 示例命令解释
@@ -283,4 +289,167 @@ $ docker diff webserver
   - docker tag [镜像名称:版本号] [上传的命名:版本号]
   - 上传最新版，最好不仅上传版本号的，还要上传lastest
 - **推送：** docker push
+  - docker push [上传的命名:版本号]
 
+
+
+## 存储 - 目录挂载
+
+> **小tips**
+>
+> docker rm $(docker ps -aq)
+>
+> - docker ps -aq: 列出所有容器id
+> - 因此，如上命令的意思是，删除所有容器（如果存在运行中的，使用docker rm -f 强制删除即可）
+
+不使用目录挂载的话，docker容器挂掉了或者炸了，数据配置丢失无法找回
+
+因此需要将容器的文件挂载到本地
+
+### 如何使用
+
+docker run 命令中，添加 -v 参数
+
+如： -v **[外部主机文件or目录]**:[容器内文件or目录]
+
+如果外部主机，不存在对应的文件or目录，将自动创建
+
+**注意：** 挂载外部主机文件的时候，容器内的文件将会同步生成。
+
+也就是说，如果原本会生成的默认文件夹or默认文件的内容，都会根据外部主机的内容来（外部主机的新文件[夹]为空，那么容器内的文件[夹]也为空）
+
+
+
+## 存储 - 卷映射
+
+### 如何使用
+
+docker run 命令中，添加 -v 参数
+
+如： -v **[卷名]**:[容器内的目录]
+
+不以 / 或 ./ 开始的名称，就表示 '卷'，docker会自动创建一个存储位置
+
+将容器内部的初始化内容，与该存储位置保持一致
+
+### 卷位置
+
+docker统一的 卷存储位置：`/var/lib/docker/volumes/<volume-name>`
+
+与其_data文件夹下内容一致
+
+### 卷操作
+
+- **查看：** docker volume ls
+- **创建：** docker volume crea  te [卷名称]
+- **查看卷详情：** docker volume inspect [卷名称]
+  - 可以查看位置
+
+
+
+## 网络 - 自定义网络
+
+> - 轻松构建集群
+
+个人可以考虑到的方式就是，容器1直接通过机器的IP，去访问容器2的内容（都暴露了端口到外部主机）
+
+这就类似，你和同桌要说话，却要走出班级，再进来和他说话...
+
+
+
+### docker网络机制
+
+docker安装完毕后，使用ifconfig可以看到一个名为docker0的网卡
+
+docker启动的应用，都加入了docker0的网络环境中
+
+每个应用，docker都会分配IP
+
+
+
+### 查看容器细节
+
+- docker container inspect [容器名称]
+  - 可以查看到，docker0的ip，是其网关地址（gateway）
+  - docker为其分配的ip再IPAddress字段上
+
+
+
+此时，发现docker启动的应用，共用同一个网关
+
+那么容器1，想访问容器2的网络，可以指 访问容器2的 IP+容器2的端口（不是暴露到主机的端口，而是应用端口）
+
+
+
+因为docker0，不支持通过外部主机域名进行访问
+
+需要我们创建一个自定义网络后，容器名 = 稳定的域名
+
+创建容器应用时，加入到对应的自定义网络中，就可以实现容器之间通过域名相互访问
+
+**如：** 我创建了一个 mynet 的自定义网络
+
+容器1和容器2启动时，都 --network mynet
+
+此时容器1 想访问容器，就可以直接 访问 http://[容器2名称]:[容器端口]
+
+
+
+### 自定义网络操作
+
+- **创建自定义网络：** docker network create [自定义网络名称]
+- **查看自定义网络：** docker network ls
+
+
+
+## 网络 - Redis主从同步集群
+
+> #### **需求**
+>
+> - **注意：官方主从配置较为麻烦，此处演示使用 bitnami的redis集群docker镜像**
+> - **直接通过修改环境变量的方式实现集群功能，官方需修改配置文件**
+>
+> 创建redis01 & redis02，全部加入到同一个自定义网络 mynet 中
+>
+> 实现读写分离，写操作由redis01执行，读操作由reids02来执行、
+>
+> 分别暴露到外部主机的 6379 & 6380 端口
+>
+> 并将其/bitnami/redis/data 数据目录，分别挂载到外部主机的 /app/rd1 和 /app/rd2 目录下
+
+### 创建redis01
+
+```bash
+docker run -d -p 6379:6379 \
+-v /app/rd1:/bitnami/redis/data \
+-e REDIS_REPLICATION_MODE=master \
+-e REDIS_PASSWORD=123456 \
+--network mynet --name redis01 \
+bitnami/redis
+```
+
+
+
+### 创建Redis02
+
+```BASH
+docker run -d -p 6380:6379 \
+-v /app/rd2:/bitnami/redis/data \
+-e REDIS_REPLICATION_MODE=slave \
+-e REDIS_MASTER_HOST=redis01 \
+-e REDIS_MASTER_PORT_NUMBER=6379 \
+-e REDIS_MASTER_PASSWORD=123456 \
+-e REDIS_PASSWORD=123456 \
+--network mynet --name redis02 \
+bitnami/redis
+```
+
+redis02需注意，绑定主redis的host时，
+
+如果是在同一个docker自定义网络下，直接使用主redis的容器名称即可
+
+并且，主从密码需一致
+
+
+
+## Docker Compose
