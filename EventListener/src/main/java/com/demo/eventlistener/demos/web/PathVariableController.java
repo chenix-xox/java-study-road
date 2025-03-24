@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.demo.springboot.demos.web;
+package com.demo.eventlistener.demos.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

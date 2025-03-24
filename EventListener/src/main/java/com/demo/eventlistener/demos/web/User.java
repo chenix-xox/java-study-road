@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.demo.springboot.demos.web;
+package com.demo.eventlistener.demos.web;
 
 /**
  * @author <a href="mailto:chenxilzx1@gmail.com">theonefx</a>
