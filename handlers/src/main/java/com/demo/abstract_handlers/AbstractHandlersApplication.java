@@ -1,13 +1,13 @@
-package com.demo.springboot;
+package com.demo.abstract_handlers;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringbootApplication {
+public class AbstractHandlersApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootApplication.class, args);
+        SpringApplication.run(AbstractHandlersApplication.class, args);
     }
 
 }
