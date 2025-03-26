@@ -453,3 +453,188 @@ redis02需注意，绑定主redis的host时，
 
 
 ## Docker Compose
+
+> 批量管理容器
+
+创建一个compose.yaml文件，里面包含若干个容器信息
+
+**上线（将配置文件中的容器批量上线）：** docker compose up -d
+
+**下线：** docker compose down
+
+上线 与 启动的区别：
+
+- 上线=第一次创建应用并启动
+- 启动=之前启动过，暂时停止了，再启动
+
+**指定启动a、b：** docker compose start a b 
+
+**指定停止a、b：** docker compose stop a b 
+
+**扩容：** docker compose scale a=3
+
+- 解释：如果已经有a容器启动了，此时还会再启动2个a容器
+
+
+
+## DockerCompose安装wordpress
+
+### 以前的操作
+
+1. 创建自定义网络
+
+   `docker network create blog`
+
+2. 创建数据库容器
+
+   ```bash
+   docker run \
+   -p 13307:3306 \
+   --restart=always \
+   --name mysql_wordpress \
+   --network blog \
+   -v mysql-data:/var/lib/mysql \
+   -v /app/myconf:/etc/mysql/conf.d \
+   -e MYSQL_ROOT_PASSWORD=123456 \
+   -e MYSQL_DATABASE=wordpress \
+   -d mysql:8.0  
+   ```
+
+3. 创建wordpress博客系统
+
+   ```bash
+   docker run -d -p 8080:80 \
+   -e WORDPRESS_DB_HOST=mysql \
+   -e WORDPRESS_DB_USER=root \
+   -e WORDPRESS_DB_PASSWORD=123456 \
+   -e WORDPRESS_DB_NAME=wordpress \
+   -v wordpress:/var/www/html \
+   --restart always --name wordpress-app \
+   --network blog \
+   wordpress:latest
+   ```
+
+
+
+### 现在的方法 - 编写compose.yaml文件
+
+> - 顶级元素
+>    - name 名字（本次部署的应用名称）
+>    - services 服务
+>    - networks 网络
+>    - volumes 卷
+>    - configs 配置
+>    - secrets 密钥
+>
+> **一般使用前四个即可**
+
+#### 示例
+
+```yaml
+name: blog_test # 本次部署服务的应用名称
+services: # 要启动的服务信息
+  mysql_wordpress:  # 应用名称（随便写）
+    container_name: mysql_wordpress # 容器名称，等同于 --name mysql_wordpress（不写默认按应用名称来）
+    image: mysql:8.0 # 使用的镜像
+    ports:  # 端口（可绑定多个）等同于 -p 13308:3306
+      - "13307:3306"
+    environment:  # 环境变量
+      - MYSQL_ROOT_PASSWORD=123456 # 等同于 -e MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=wordpress # 等同于 -e MYSQL_DATABASE=wordpress
+    volumes:  # 卷映射 & 路径映射
+      - mysql-data:/var/lib/mysql # 卷映射需在顶级元素下声明，此处等同于 -v mysql-data:/var/lib/mysql
+      - /app/myconf:/etc/mysql/conf.d # 等同于 -v /app/myconf:/etc/mysql/conf.d
+    restart: always # 等同于 --restart always
+    networks: # 网络
+      - blog # 等同于 --network blog
+  wordpress:  # 应用名称（随便写）
+    container_name: wordpress-app
+    image: wordpress:latest # 使用的镜像
+    ports:
+      - "8080:80"
+    environment:
+      - WORDPRESS_DB_HOST=mysql_wordpress
+      - WORDPRESS_DB_USER=root
+      - WORDPRESS_DB_PASSWORD=123456
+      - WORDPRESS_DB_NAME=wordpress
+    volumes:
+      - wordpress:/var/www/html
+    restart: always
+    networks:
+      - blog
+    depends_on:
+      - mysql_wordpress # mysql先启动，再启动此项
+
+volumes:
+  mysql-data: # 此处还能添加配置
+  wordpress:
+
+networks: # 类似 docker network create blog
+  blog:
+
+```
+
+
+
+编写完毕后的 compose.yaml文件，直接上线
+
+`docker compose -f compose.yaml up -d`
+
+-f 指定文件名称，否则默认compose.yaml
+
+**结果如下：**
+
+```bash
+[root@xxx tmp]# docker compose -f ./compose.yaml up  -d 
+[+] Running 5/5
+ ✔ Network blog_test_blog	      Created	0.0s
+ ✔ Volume "blog_test_wordpress"   Created	0.0s
+ ✔ Volume "blog_test_mysql-data"  Created   0.0s
+ ✔ Container mysql_wordpress      Started   0.3s 
+ ✔ Container wordpress-app        Started   0.7s 
+```
+
+
+
+## Docker Compose 其他
+
+- 已经运行的compose.yaml，修改其中的部分配置，使用 docker compose up 重新启动
+
+  被修改配置的那一个应用将会被 restart ，不影响compose.yaml文件内其他未修改的应用
+
+- 使用 docker compose down 移除容器的时候，不会移除 卷（volume）
+
+  下次启动相同compose.yaml时，依旧绑定原本的卷
+
+  加入参数，移除容器的同时，移除镜像和卷
+
+  `docker compose -f compose.yaml down -rmi -v`
+
+
+
+## DockerFile - 构建自定义镜像
+
+| 常见指令   | 作用               |
+| ---------- | ------------------ |
+| FROM       | 指定镜像基础环境   |
+| RUN        | 运行自定义命令     |
+| CMD        | 容器启动命令或参数 |
+| LABEL      | 自定义标签         |
+| EXPOSE     | 指定暴露端口       |
+| ENV        | 环境变量           |
+| ADD        | 添加文件到镜像     |
+| COPY       | 复制文件到镜像     |
+| ENTRYPOINT | 容器固定启动命令   |
+| VOLUME     | 数据卷             |
+| USER       | 指定用户和用户组   |
+| WORKDIR    | 指定默认工作目录   |
+| ARG        | 指定构建参数       |
+
+相当于是构建了一套自己自定义的操作系统，里面包含哪些环境，默认有哪些文件...
+
+比起直接保存镜像然后分享，这个更像是从头自定义一套镜像
+
+
+
+## Docker Compose 一键启动开发环境（常见中间件）
+
