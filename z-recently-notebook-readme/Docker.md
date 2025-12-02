@@ -164,6 +164,41 @@ $ docker diff webserver
 
 
 
+## Docker卸载
+
+```bash
+# 查看版本
+docker --version
+
+# 卸载
+yum remove docker \
+    docker-client \
+    docker-client-latest \
+    docker-common \
+    docker-latest \
+    docker-latest-logrotate \
+    docker-logrotate \
+    docker-selinux \
+    docker-engine-selinux \
+    docker-engine \
+    docker-ce
+```
+
+
+
+## Docker安装（CentOS7）
+
+```bash
+sudo yum update -y
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum list docker-ce --showduplicates | sort -r
+# 默认最新版
+yum -y install  docker-ce docker-ce-cli containerd.io
+```
+
+
+
 ## 镜像操作
 
 - **检索**：`docker search`
@@ -638,3 +673,30 @@ networks: # 类似 docker network create blog
 
 ## Docker Compose 一键启动开发环境（常见中间件）
 
+
+
+## 常见安装记录
+
+### 前情提要
+
+- 配置daemon.json
+- 国内镜像被墙，按如下配置还是在用原始镜像地址取pull...
+
+```bash
+sudo mkdir -p /etc/docker
+
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://t3vham8h.mirror.aliyuncs.com"]
+}
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+
+
+### FRPS 0.61.2
+
+带前缀pull吧...
